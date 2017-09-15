@@ -30,7 +30,6 @@ module.exports = {
   },
   devServer: {
     host: 'localhost',
-    port: config.port,
     overlay: {
       errors: true,
       warnings: true,
