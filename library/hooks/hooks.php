@@ -11,29 +11,29 @@
  * @return string
  */
 add_filter( 'embed_oembed_html', function ( $html, $url, $attr, $post_id ) {
-    $matches = [
-        'youtube.com',
-        'vimeo.com',
-        'youtu.be'
-    ];
+	$matches = [
+		'youtube.com',
+		'vimeo.com',
+		'youtu.be'
+	];
 
-    foreach ( $matches as $match ) {
-        if ( false !== stripos( $url, $match ) ) {
-            return '<div class="framecontainer">' . $html . '</div>';
-        }
-    }
+	foreach ( $matches as $match ) {
+		if ( false !== stripos( $url, $match ) ) {
+			return '<div class="framecontainer">' . $html . '</div>';
+		}
+	}
 
-    return $html;
+	return $html;
 }, 99, 4 );
 
 /**
  * Remove h1-tag from tinyMCE, show second row by default
  */
 add_filter( 'tiny_mce_before_init', function ( $init ) {
-    $tinymce['wordpress_adv_hidden'] = false;
-    $init['block_formats']           = "Paragraph=p;Address=address;Pre=pre;Heading 2=h2;Heading 3=h3;Heading 4=h4";
+	$tinymce['wordpress_adv_hidden'] = false;
+	$init['block_formats']           = "Paragraph=p;Address=address;Pre=pre;Heading 2=h2;Heading 3=h3;Heading 4=h4";
 
-    return $init;
+	return $init;
 } );
 
 /**
@@ -42,11 +42,11 @@ add_filter( 'tiny_mce_before_init', function ( $init ) {
  * @hook digia_wp_base_after_body
  */
 add_action( 'digia_wp_base_after_body', function () {
-    $options = get_option( 'digia_wp_base_general_options' );
+	$options = get_option( 'digia_wp_base_general_options' );
 
-    if ( ! empty( $options['digia_wp_base_tagmanager'] ) ) :
-        echo $options['digia_wp_base_tagmanager'];
-    endif;
+	if ( ! empty( $options['digia_wp_base_tagmanager_body'] ) ) :
+		echo $options['digia_wp_base_tagmanager_body'];
+	endif;
 } );
 
 /**
@@ -55,9 +55,15 @@ add_action( 'digia_wp_base_after_body', function () {
  * @hook wp_head
  */
 add_action( 'wp_head', function () {
-    $imageUri = UTILS()->get_image_uri();
+	$options = get_option( 'digia_wp_base_general_options' );
 
-    echo <<<EOT
+	if ( ! empty( $options['digia_wp_base_tagmanager_head'] ) ) :
+		echo $options['digia_wp_base_tagmanager_head'];
+	endif;
+
+	$imageUri = UTILS()->get_image_uri();
+
+	echo <<<EOT
 	\n
 	
 	<link rel="icon" type="image/png" sizes="192x192" href="{$imageUri}/icons/android-chrome-192x192.png">

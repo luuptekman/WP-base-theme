@@ -126,9 +126,16 @@ class Settings {
 			'show_names' => true,
 			'fields'     => [
 				[
-					'name'    => __( 'Tag-manager', TEXT_DOMAIN ),
-					'desc'    => __( 'Add here the full Tag-manager -snippet.', TEXT_DOMAIN ),
-					'id'      => 'digia_wp_base_tagmanager',
+					'name'    => __( 'Tag-manager head', TEXT_DOMAIN ),
+					'desc'    => __( 'Add here the full Tag-manager -snippet that goes to head.', TEXT_DOMAIN ),
+					'id'      => 'digia_wp_base_tagmanager_head',
+					'default' => '',
+					'type'    => 'textarea_code',
+				],
+				[
+					'name'    => __( 'Tag-manager body', TEXT_DOMAIN ),
+					'desc'    => __( 'Add here the full Tag-manager -snippet that goes to beginning of body.', TEXT_DOMAIN ),
+					'id'      => 'digia_wp_base_tagmanager_body',
 					'default' => '',
 					'type'    => 'textarea_code',
 				],
