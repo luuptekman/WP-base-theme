@@ -230,14 +230,13 @@ class Utils {
 	 *
 	 * @return false|string
 	 */
-	public function getPostImage( $size = 'full', $postId = null ) {
+	public function get_the_featured_image_url( $size = 'full', $postId = null ) {
 		$featuredImageUrl = get_the_post_thumbnail_url( $postId, $size );
 
 		if($featuredImageUrl) {
 			return $featuredImageUrl;
 		} else {
-			$image_id = isset( get_option( 'talvisota_general_options' )['talvisota_default_image_id'] ) ? get_option( 'talvisota_general_options' )['talvisota_default_image_id'] : null;
-			return wp_get_attachment_image_src( $image_id, $size )[0];
+		    return $this->get_default_image($size);
 		}
 	}
 }
