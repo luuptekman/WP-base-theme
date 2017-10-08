@@ -220,4 +220,24 @@ class Utils {
         $str = preg_replace( "/\[.*\]\s*/", "", $str );
         return '<p>' . $str . '</p>';
     }
+
+	/**
+	 * Retrive post thumbnail (featured image) if defined,
+	 * if not, retrieve default post image that's defined in theme settings
+	 *
+	 * @param string $size
+	 * @param null $postId
+	 *
+	 * @return false|string
+	 */
+	public function getPostImage( $size = 'full', $postId = null ) {
+		$featuredImageUrl = get_the_post_thumbnail_url( $postId, $size );
+
+		if($featuredImageUrl) {
+			return $featuredImageUrl;
+		} else {
+			$image_id = isset( get_option( 'talvisota_general_options' )['talvisota_default_image_id'] ) ? get_option( 'talvisota_general_options' )['talvisota_default_image_id'] : null;
+			return wp_get_attachment_image_src( $image_id, $size )[0];
+		}
+	}
 }
