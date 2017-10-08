@@ -236,7 +236,7 @@ class Utils {
 		if($featuredImageUrl) {
 			return $featuredImageUrl;
 		} else {
-		    return $this->get_default_image($size);
+		    return $this->get_default_image( $size );
 		}
 	}
 }
