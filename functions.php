@@ -241,3 +241,16 @@ add_action( 'after_switch_theme', function () {
         update_option( 'stylesheet', $stylesheet . '/templates' );
     }
 } );
+
+/**
+ * Register local ACF-json
+ */
+add_filter( 'acf/settings/save_json', function () {
+    return get_stylesheet_directory() . '/library/acf-data';
+} );
+
+add_filter( 'acf/settings/load_json', function () {
+    $paths[] = get_stylesheet_directory() . '/library/acf-data';
+
+    return $paths;
+} );
