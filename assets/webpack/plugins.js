@@ -56,7 +56,7 @@ const commonPlugins = [
     'window.Tether': 'tether',
   }),
   new ImageminPlugin({
-    disable: false,
+    disable: !isProduction,
     optipng: {
       optimizationLevel: 7,
     },
@@ -102,13 +102,13 @@ const developPlugins = [
         }
       }
     }],
-    rewriteRules: [{
-      // Don't serve images from /dist on dev-server
-      match: /(assets\/.*?\.(png|jpe?g|svg|gif))/g,
-      fn: function (req, res, match) {
-        return match.replace('dist/', '');
-      }
-    }]
+    // rewriteRules: [{
+    //   // Don't serve images from /dist on dev-server
+    //   match: /(assets\/.*?\.(png|jpe?g|svg|gif))/g,
+    //   fn: function (req, res, match) {
+    //     return match.replace('/dist', '');
+    //   }
+    // }]
   },
   {
     reload: false
