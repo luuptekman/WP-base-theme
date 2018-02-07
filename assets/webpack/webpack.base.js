@@ -111,7 +111,30 @@ module.exports = {
         }))
       },
       {
-        test: /\.(png|jpe?g|gif|svg)$/,
+        test: /\.svg$/,
+        oneOf: [
+          {
+            exclude: path.resolve(__dirname, '../images'),
+            use: {
+              loader: 'file-loader',
+              options: {
+                name: 'vendor/[name].[ext]',
+              }
+            },
+          },
+          {
+            include: path.resolve(__dirname, '../images'),
+            use: {
+              loader: 'file-loader',
+              options: {
+                name: 'images/[name].[ext]',
+              }
+            },
+          },
+        ],
+      },
+      {
+        test: /\.(png|jpe?g|gif)$/,
         include: path.resolve(__dirname, '../'),
         use: {
           loader: 'file-loader',
@@ -121,7 +144,7 @@ module.exports = {
         },
       },
       {
-        test: /\.(woff2?|ttf|eot|svg|xml|json)(\?v=[a-z0-9]\.[a-z0-9]\.[a-z0-9])?$/,
+        test: /\.(woff2?|ttf|eot|xml|json)(\?v=[a-z0-9]\.[a-z0-9]\.[a-z0-9])?$/,
         use: {
           loader: 'file-loader',
           options: {
