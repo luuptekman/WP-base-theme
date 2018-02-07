@@ -220,4 +220,23 @@ class Utils {
         $str = preg_replace( "/\[.*\]\s*/", "", $str );
         return '<p>' . $str . '</p>';
     }
+
+	/**
+	 * Retrive post thumbnail (featured image) if defined,
+	 * if not, retrieve default post image that's defined in theme settings
+	 *
+	 * @param string $size
+	 * @param null $postId
+	 *
+	 * @return false|string
+	 */
+	public function get_the_featured_image_url( $size = 'full', $postId = null ) {
+		$featuredImageUrl = get_the_post_thumbnail_url( $postId, $size );
+
+		if($featuredImageUrl) {
+			return $featuredImageUrl;
+		} else {
+		    return $this->get_default_image( $size );
+		}
+	}
 }

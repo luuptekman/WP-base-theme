@@ -15,7 +15,7 @@ Object.keys(config.entries).forEach(function (id) {
 module.exports = {
   entry: entry,
   output: {
-    path: path.resolve(__dirname, '../../assets/dist'),
+    path: path.resolve(__dirname, '../dist'),
     publicPath: publicPath,
     filename: 'scripts/[name].min.js',
     sourceMapFilename: '[name].[hash].js.map',
@@ -25,7 +25,6 @@ module.exports = {
     extensions: ['.js', '.html'],
     alias: {
       src: path.resolve(__dirname, '../'),
-      assets: path.resolve(__dirname, '../assets')
     },
   },
   devServer: {
@@ -101,9 +100,6 @@ module.exports = {
             },
             {
               loader: 'resolve-url-loader',
-              options: {
-                sourceMap: !isProduction
-              }
             },
             {
               loader: 'sass-loader',
@@ -115,43 +111,21 @@ module.exports = {
         }))
       },
       {
-        test: /\.(png|jpe?g|gif|svg|xml|json)$/,
+        test: /\.(png|jpe?g|gif|svg)$/,
         include: path.resolve(__dirname, '../'),
         use: {
           loader: 'file-loader',
           options: {
-            name: '[path][name].[ext]',
+            name: 'images/[name].[ext]',
           }
         },
       },
       {
-        test: /\.(ttf|eot)$/,
+        test: /\.(woff2?|ttf|eot|svg|xml|json)(\?v=[a-z0-9]\.[a-z0-9]\.[a-z0-9])?$/,
         use: {
           loader: 'file-loader',
           options: {
             name: 'vendor/[name].[ext]',
-          }
-        },
-      },
-      {
-        test: /\.(woff|ttf|eot|svg)(\?v=[a-z0-9]\.[a-z0-9]\.[a-z0-9])?$/,
-        use: {
-          loader: 'url-loader',
-          options: {
-            name: 'vendor/[name].[ext]',
-            limit: 10000,
-            mimetype: 'application/font-woff'
-          }
-        },
-      },
-      {
-        test: /\.woff2(\?\S*)?$/,
-        use: {
-          loader: 'url-loader',
-          options: {
-            name: 'vendor/[name].[ext]',
-            limit: 10000,
-            mimetype: 'application/font-woff'
           }
         },
       },
