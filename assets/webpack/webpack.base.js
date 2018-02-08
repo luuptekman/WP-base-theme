@@ -135,7 +135,6 @@ module.exports = {
       },
       {
         test: /\.(png|jpe?g|gif)$/,
-        include: path.resolve(__dirname, '../'),
         use: {
           loader: 'file-loader',
           options: {
