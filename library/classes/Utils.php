@@ -239,4 +239,19 @@ class Utils {
 		    return $this->get_default_image( $size );
 		}
 	}
+
+	/**
+	 * Return post type name by post id
+	 *
+	 * @param $post_id
+	 * @param string $name (can be set to name or singular_name)
+	 *
+	 * @return mixed
+	 */
+	function get_post_type_name_by_post( $post_id, $name = 'name' ) {
+		$post_type        = get_post_type( $post_id );
+		$post_type_object = get_post_type_object( $post_type );
+
+		return $post_type_object->labels->{$name};
+	}
 }
