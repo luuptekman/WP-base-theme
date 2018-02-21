@@ -130,7 +130,8 @@ const productionPLugins = [
     cssProcessorOptions: {
       discardComments: {
         removeAll: true
-      }
+      },
+      safe: true,
     }
   }),
   new FaviconsWebpackPlugin({
