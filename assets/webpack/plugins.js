@@ -6,7 +6,7 @@ const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const WebpackCleanupPlugin = require('webpack-cleanup-plugin');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ImageminPlugin = require('imagemin-webpack-plugin').default;
 const imageminMozjpeg = require('imagemin-mozjpeg');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
@@ -14,7 +14,7 @@ const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 const pkg = require('../../package.json');
 
-const isProduction = !!((argv.env && argv.env.production) || argv.p);
+const isProduction = !!(argv.mode && argv.mode === 'production');
 
 /**
  * Common plugins
@@ -73,10 +73,10 @@ const commonPlugins = [
       quality: 75,
     })]
   }),
-  new ExtractTextPlugin({
+  new MiniCssExtractPlugin({
     filename: 'styles/[name].css',
-    allChunks: true,
-  }),
+    chunks: 'all'
+  })
 ];
 
 /**
@@ -121,11 +121,11 @@ const developPlugins = [
 const productionPLugins = [
   new WebpackCleanupPlugin(),
   new webpack.optimize.OccurrenceOrderPlugin(),
-  new webpack.optimize.UglifyJsPlugin({
+  /*new webpack.optimize.UglifyJsPlugin({
     compressor: {
       warnings: false
     }
-  }),
+  }),*/
   new OptimizeCssAssetsPlugin({
     cssProcessorOptions: {
       discardComments: {
@@ -139,6 +139,7 @@ const productionPLugins = [
     logo: path.resolve(__dirname, '../images/logo.png'),
     prefix: 'images/icons/',
     statsFilename: 'iconstats-[hash].json',
+    inject: false,
     icons: {
       android: true,              // Create Android homescreen icon. `boolean`
       appleIcon: true,            // Create Apple touch icons. `boolean` or `{ offset: offsetInPercentage }`
