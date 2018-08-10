@@ -1,8 +1,10 @@
+const zlib = require('zlib');
 const path = require('path');
 const argv = require('minimist')(process.argv.slice(2));
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const config = require('../../package.json').config;
 
+const proxyUrl = argv.proxyUrl || config.proxyUrl;
 const isProduction = !!(argv.mode && argv.mode === 'production');
 // A bit nonsense, yet works...
 const publicPath = `/${path.dirname(process.cwd()).split(path.sep).slice(-2).concat(path.basename(process.cwd())).join('/')}/assets/dist/`;
@@ -36,10 +38,44 @@ module.exports = {
     hotOnly: true,
     proxy: {
       '/': {
-        target: argv.proxyUrl || config.proxyUrl,
+        target: proxyUrl,
         secure: false,
         changeOrigin: true,
         autoRewrite: true,
+        onProxyRes: (proxyRes, req, res) => {
+          if (proxyRes.headers && proxyRes.headers['content-type'].match(/^text\/html;/)) {
+            const end = res.end;
+            const writeHead = res.writeHead;
+            let writeHeadArgs;
+            let body;
+            let buffer = Buffer.from('', 'utf-8');
+
+            proxyRes
+              .on('data', (chunk) => {
+                buffer = Buffer.concat([buffer, chunk]);
+              })
+              .on('end', () => {
+                if (proxyRes.headers['content-encoding'] === 'gzip') {
+                  body = zlib.gunzipSync(buffer).toString('utf-8');
+                } else {
+                  body = buffer.toString('utf-8');
+                }
+              });
+
+            // Defer write and writeHead
+            res.write = () => {};
+            res.writeHead = (...args) => { writeHeadArgs = args; };
+
+            res.end = () => {
+              // Replace absolute links with relative urls
+              const output = body.replace(new RegExp(proxyUrl, 'g'), '/');
+              res.setHeader('content-length', output.length);
+              res.setHeader('content-encoding', '');
+              writeHead.apply(res, writeHeadArgs);
+              end.apply(res, [output]);
+            };
+          }
+        }
       },
     },
     publicPath: `http://localhost:8080${publicPath}`,
