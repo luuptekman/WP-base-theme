@@ -6,12 +6,12 @@
 2. Run `yarn` to install front-end-depencies
 3. Run `yarn run config` to setup project
 4. Change `package.json` config-section to suit your needs:
-* `devUrl`: The development URL where webpack will be proxied to
+* `proxyUrl`: The default development URL where webpack will be proxied to
 * `entries`: Scripts & styles which will be compiled to `/dist`-folder. Each entry will be compiled with the name specified with the objects `key`.
 
 ```json
 "config": {
-  "devUrl": "http://digiawpbase.dev",
+  "proxyUrl": "http://digiawpbase.dev",
   "entries": {
     "main": [
       "./scripts/main.js",
@@ -28,12 +28,13 @@
 }
 ```
 
-4. Run `yarn start` to start `Webpack` to watch & rebuild on asset changes (You have to configure the configs `devUrl` to correctly proxy to `http://localhost:3000`)
+4. Run `yarn start` to start `Webpack` to watch & rebuild on asset changes (You have to configure the configs `proxyUrl` to correctly proxy to your dev environment or use `--proxyUrl` flag, e.g. `yarn start --proxyUrl http://site.digiawpbase.dev`)
 5. To build for production, run `yarn run prod` which compresses the scripts & styles, disables sourcemaps, copies images from `assets/images` to `dist/images` and creates most common favicons automatically to `icons`-subfolder.
 
 
 #### Available npm-scripts:
-* `yarn start`: Start `webPack`
+* `yarn start`: Start `webpack`
+* `yarn start --proxyUrl http://digiawpbase.dev`: Start webpack with proxy to `http://site.digiawpbase.dev`
 * `yarn run prod`: Build assets for production
 * `yarn test`: Test scripts
 * `yarn run config`: Run project-config (On a fresh clone of this repo)
