@@ -1,9 +1,15 @@
 @import "common/fonts";
-@import "common/settings";
+@import "common/functions";
+@import "common/variables";
 
 // Import npm dependencies
-@import "~bootstrap-sass/assets/stylesheets/bootstrap";
+@import "~bootstrap/scss/bootstrap";
 @import "~font-awesome/scss/font-awesome";
+
+// Leaflet & Slick available..
+//@import "~leaflet/dist/leaflet.css";
+//@import "~slick-carousel/slick/slick.scss";
+//@import "~slick-carousel/slick/slick-theme.scss";
 
 // Global
 @import "common/global";

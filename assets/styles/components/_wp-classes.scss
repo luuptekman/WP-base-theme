@@ -10,29 +10,28 @@
 
 .aligncenter {
   display: block;
-  margin: ($line-height-computed / 2) auto;
 }
 
 .alignleft,
 .alignright {
-  margin-bottom: ($line-height-computed / 2);
+  margin-bottom: 2rem;
 }
 
-@media (min-width: $screen-md-min) {
+@include media-breakpoint-up(md) {
   // Only float if not on an extra small device
   .alignleft {
     float: left;
-    margin-right: ($line-height-computed / 2);
+    margin-right: 2rem;
   }
   .alignright {
     float: right;
-    margin-left: ($line-height-computed / 2);
+    margin-left: 2rem;
   }
 }
 
 // Captions
 .wp-caption {
-  @extend .thumbnail;
+  @extend .img-thumbnail;
 }
 
 //Avoiding overflow

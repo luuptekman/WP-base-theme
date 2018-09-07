@@ -22,11 +22,11 @@
   > a {
     color: #FFF;
     padding: 0.5rem 1rem;
-    background-color: $brand-primary;
+    background-color: $primary;
     text-decoration: none;
 
     &:hover, &:focus, &:active {
-      background-color: darken($brand-primary, 10%);
+      background-color: darken($primary, 10%);
       color: #FFF;
       text-decoration: none;
     }
