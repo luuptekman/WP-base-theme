@@ -1,7 +1,10 @@
 // import external dependencies
 import 'jquery';
-import 'bootstrap-sass/assets/javascripts/bootstrap';
+import 'bootstrap';
 import 'fastclick';
+
+// Slick available..
+//import 'slick-carousel';
 
 // import local dependencies
 import Router from './util/router';
