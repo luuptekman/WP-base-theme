@@ -20,7 +20,7 @@
   },
   "config": {
     "port": 3000,
-    "proxyUrl": "http://playground.dev",
+    "proxyUrl": "http://sandbox.dev",
     "entries": {
       "main": [
         "./assets/scripts/main.js",
